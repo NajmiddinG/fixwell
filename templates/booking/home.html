@@ -1,0 +1,114 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f5f0">
+  <title>Fixwell | Repair appointments</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'booking/css/app.css' %}">
+  <script src="{% static 'booking/js/app.js' %}" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="/" aria-label="Fixwell home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M19.9 4.2a9 9 0 0 0-11.5 11.5l-5.1 5.1a3.7 3.7 0 0 0 5.2 5.2l5.1-5.1A9 9 0 0 0 25.1 9.4l-5.3 5.3-4.5-4.5 5.3-5.3-.7-.7Z"/></svg></span>
+        <span>fixwell<span class="brand-period">.</span></span>
+      </a>
+      <div class="sidebar-label">YOUR SPACE</div>
+      <nav class="side-nav">
+        <button class="nav-item is-active" data-view="booking" type="button"><span class="nav-icon" aria-hidden="true">＋</span>Book a repair</button>
+        <button class="nav-item" data-view="appointments" type="button"><span class="nav-icon nav-icon-calendar" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="3" y="5" width="14" height="12" rx="2"/><path d="M6.5 3v4M13.5 3v4M3 9h14"/></svg></span>My appointments<span class="nav-count" id="appointment-count" hidden>0</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-help-icon" aria-hidden="true">?</div>
+        <div><strong>Need a hand?</strong><span>We’re here to help.</span></div>
+        <a href="mailto:hello@fixwell.example" aria-label="Email support">↗</a>
+      </div>
+      <div class="sidebar-account" id="sidebar-account">
+        <span class="avatar" id="sidebar-avatar">G</span>
+        <span class="account-copy"><strong id="sidebar-name">Guest</strong><span id="sidebar-email">Sign in to continue</span></span>
+        <button class="account-action" id="account-action" type="button" aria-label="Sign in">↗</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb"><span>Customer portal</span><span class="breadcrumb-divider">/</span><strong id="current-section">Book a repair</strong></div>
+        <div class="topbar-actions"><span class="open-label"><i></i> Taking appointments</span><button class="mobile-account" id="mobile-account" type="button">Sign in</button></div>
+      </header>
+
+      <section class="view-panel" id="booking-view">
+        <section class="welcome-band">
+          <div class="welcome-copy">
+            <p class="eyebrow">REPAIRS, WITHOUT THE RUNAROUND</p>
+            <h1>Let’s get it<br><span>working again.</span></h1>
+            <p class="welcome-description">Choose a service, find a time that works, and leave the rest to us.</p>
+            <div class="welcome-detail"><span class="detail-check">✓</span> Skilled local technicians <span class="detail-separator">·</span> Upfront pricing</div>
+          </div>
+          <div class="welcome-photo-wrap"><img class="welcome-photo" src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1000&q=85" alt="Technician carefully repairing equipment"></div>
+          <div class="welcome-index" aria-hidden="true">01 <span></span> 03</div>
+        </section>
+
+        <div class="booking-layout">
+          <section class="service-section" aria-labelledby="service-heading">
+            <div class="section-heading-row">
+              <div><p class="eyebrow">STEP 01 <span>—</span> PICK A SERVICE</p><h2 id="service-heading">What needs fixing?</h2></div>
+              <span class="result-count" id="service-count"></span>
+            </div>
+            <div class="service-grid" id="service-list" aria-live="polite">
+              <div class="loading-state"><span class="spinner"></span>Loading services</div>
+            </div>
+          </section>
+
+          <section class="booking-panel" aria-labelledby="booking-heading">
+            <div class="panel-heading"><div><p class="eyebrow">STEP 02 <span>—</span> MAKE IT YOURS</p><h2 id="booking-heading">Choose a time</h2></div><span class="step-badge">02</span></div>
+            <p class="panel-hint" id="booking-hint">Select a service to see available technicians and times.</p>
+            <label class="field-label" for="technician-select">Technician</label>
+            <select id="technician-select" class="form-control" disabled><option value="">Choose a service first</option></select>
+            <label class="field-label date-label" for="appointment-date">Appointment date</label>
+            <input id="appointment-date" class="form-control" type="date" disabled>
+            <div class="field-label slots-heading">Available times <span id="slot-date-label"></span></div>
+            <div class="slot-list" id="slot-list" aria-live="polite"><p class="empty-slots">Your available times will show here.</p></div>
+            <label class="field-label note-label" for="customer-note">Anything we should know? <span class="optional-label">Optional</span></label>
+            <textarea id="customer-note" class="form-control note-input" rows="2" maxlength="1000" placeholder="A short note for your technician"></textarea>
+            <button class="primary-button book-button" id="book-button" type="button" disabled>Continue to booking <span aria-hidden="true">→</span></button>
+            <p class="secure-note"><span aria-hidden="true">⌑</span> No payment required to book</p>
+          </section>
+        </div>
+      </section>
+
+      <section class="view-panel appointments-view" id="appointments-view" hidden>
+        <div class="appointments-heading"><div><p class="eyebrow">YOUR REPAIR JOURNEY</p><h1>Your appointments</h1><p>All your upcoming visits and past repairs, in one place.</p></div><button class="outline-button" id="new-booking-button" type="button"><span aria-hidden="true">＋</span> Book a repair</button></div>
+        <div class="appointment-tabs" role="tablist" aria-label="Appointment status"><button class="appointment-tab is-selected" data-filter="upcoming" type="button" role="tab" aria-selected="true">Upcoming</button><button class="appointment-tab" data-filter="past" type="button" role="tab" aria-selected="false">Past visits</button></div>
+        <div class="appointment-list" id="appointment-list" aria-live="polite"></div>
+      </section>
+
+      <footer class="page-footer"><span>FIXWELL <span class="brand-period">.</span></span><span>Careful work. Clear answers.</span><span>© 2026 Fixwell Service Co.</span></footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <dialog class="auth-dialog" id="auth-dialog" aria-labelledby="auth-title">
+    <form method="dialog"><button class="dialog-close" aria-label="Close sign in" value="cancel" type="submit">×</button></form>
+    <div class="dialog-brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M19.9 4.2a9 9 0 0 0-11.5 11.5l-5.1 5.1a3.7 3.7 0 0 0 5.2 5.2l5.1-5.1A9 9 0 0 0 25.1 9.4l-5.3 5.3-4.5-4.5 5.3-5.3-.7-.7Z"/></svg></span><span>fixwell<span class="brand-period">.</span></span></div>
+    <p class="eyebrow">YOUR REPAIR, YOUR TIME</p>
+    <h2 id="auth-title">Welcome back</h2>
+    <p class="auth-subtitle" id="auth-subtitle">Sign in to book a visit and manage your appointments.</p>
+    <div class="auth-tabs" role="tablist"><button type="button" class="auth-tab is-selected" data-auth-mode="login">Sign in</button><button type="button" class="auth-tab" data-auth-mode="register">Create account</button></div>
+    <form id="auth-form">
+      <div class="name-fields" id="name-fields" hidden><label class="auth-field"><span>First name</span><input id="first-name" name="first_name" autocomplete="given-name" maxlength="150"></label><label class="auth-field"><span>Last name</span><input id="last-name" name="last_name" autocomplete="family-name" maxlength="150"></label></div>
+      <label class="auth-field"><span>Email address</span><input id="auth-email" name="email" type="email" autocomplete="email" required></label>
+      <label class="auth-field"><span>Password</span><input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" required></label>
+      <p class="auth-error" id="auth-error" role="alert" hidden></p>
+      <button class="primary-button auth-submit" id="auth-submit" type="submit">Sign in <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="auth-footnote">Your account keeps every repair in one place.</p>
+  </dialog>
+</body>
+</html>

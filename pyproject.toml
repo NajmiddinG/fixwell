@@ -1,0 +1,6 @@
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "repair_booking.config.settings.development"
+python_files = ["tests/*.py"]
+
+[tool.ruff]
+line-length = 120
