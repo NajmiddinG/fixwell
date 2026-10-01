@@ -5,6 +5,7 @@ import dj_database_url
 from .base import *
 
 DEBUG = False
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 SECRET_KEY = os.environ["SECRET_KEY"]
 
 render_hostname = os.getenv("RENDER_EXTERNAL_HOSTNAME", "")
